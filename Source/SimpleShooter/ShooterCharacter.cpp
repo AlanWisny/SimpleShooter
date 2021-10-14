@@ -30,6 +30,8 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AShooterCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Strafe"), this, &AShooterCharacter::Strafe);
 	PlayerInputComponent->BindAxis(TEXT("LookStrafe"), this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis(TEXT("LookUpRate"), this, &AShooterCharacter::LookUpRate);
+	PlayerInputComponent->BindAxis(TEXT("LookStrafeRate"), this, &AShooterCharacter::LookStrafeRate);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
 }
 
@@ -48,7 +50,12 @@ void AShooterCharacter::Strafe(float AxisValue)
 	AddMovementInput(GetActorRightVector() * AxisValue);
 }
 
-// void AShooterCharacter::Jump(float AxisValue)
-// {
-// 	AddMovementInput(GetActorForwardVector() * AxisValue);
-// }
+void AShooterCharacter::LookUpRate(float AxisValue)
+{
+	AddControllerPitchInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AShooterCharacter::LookStrafeRate(float AxisValue)
+{
+	AddControllerYawInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
+}

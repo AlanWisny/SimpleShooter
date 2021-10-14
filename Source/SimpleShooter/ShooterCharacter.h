@@ -31,6 +31,11 @@ private:
 	void LookUp(float AxisValue);
 	void Strafe(float AxisValue);
 	void LookStrafe(float AxisValue);
+	void LookUpRate(float AxisValue);
+	void LookStrafeRate(float AxisValue);
+
+	UPROPERTY(EditAnywhere)
+	float RotationRate = 10.0f;
 };
 
 
