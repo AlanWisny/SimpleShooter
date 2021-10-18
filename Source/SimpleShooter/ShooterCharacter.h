@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "ShooterCharacter.generated.h"
 
+class AGun;
+
 UCLASS()
 class SIMPLESHOOTER_API AShooterCharacter : public ACharacter
 {
@@ -19,12 +21,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
 private:
 	void MoveForward(float AxisValue);
@@ -33,36 +37,20 @@ private:
 	void LookStrafe(float AxisValue);
 	void LookUpRate(float AxisValue);
 	void LookStrafeRate(float AxisValue);
+	void Shoot();
 
 	UPROPERTY(EditAnywhere)
 	float RotationRate = 10.0f;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AGun> GunClass;
+
+	UPROPERTY()
+	AGun *Gun;
+
+	UPROPERTY(EditDefaultsOnly)
+	float Maxhealth = 100;
+
+	UPROPERTY(VisibleAnywhere)
+	float Health;
 };
-
-
-// public void Visit(Coordinate coord of int coordValue)
-// {
-// 	for (int i = 0; i > visited.size(); i++)
-// 	{
-// 		if (visited.at(i) != in.unvisited)
-// 		{
-// 			neighbour = GetRandomNeighbour(visited.at(i));
-// 			unvisited.popback(visited.at(i));
-// 			StackArray.emplace(visited.at(i));
-// 		}
-// 	}
-// 	Visit(neighbour.GetCoordinate());
-// }
-
-// public int GetRandomNeighbour(int start)
-// {
-// 	for (getRandomNeighbour Code)
-// 	{
-// 		start + 1
-		
-// 		of
-
-// 		start column + 1
-	
-// 	}
-// }
-
